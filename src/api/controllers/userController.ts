@@ -1,30 +1,43 @@
 import {Response, Request} from 'express';
-import stockPrices from '../../database/stockPrice.json';
+import moment from 'moment';
+import stockPricesDay from '../../database/stockPriceDay.json';
+import stockPricesYear from '../../database/stockPriceYear.json';
 import {StockPrice, TimeInterval} from '../../types';
 
-const prices: Record<string, StockPrice[]> = stockPrices;
-
+const prices: Record<string, StockPrice[]> = stockPricesDay;
+const pricesYear: Record<string, StockPrice[]> = stockPricesYear;
 
 export function getCompanyPrice(req: Request, res: Response) {
   const company = String(req.query.company);
   const time = String(req.query.time);
 
-  const companyPrice: StockPrice[] = prices[company].filter(timePrice => {
-    const minutes = new Date(timePrice.date).getMinutes();
+  // const companyPrice: StockPrice[] = pricesYear[company];
+
+  const currentDate = new Date();
+  const startDate = moment(currentDate).subtract(6, 'M').date(1).hours(0).minutes(0).seconds(0);
+  // console.log(startDate);
+
+  const companyPrice: StockPrice[] = pricesYear[company].filter(timePrice => {
+    const date = moment(timePrice.date);
+    const day = date.date();
 
     switch (time) {
-      case TimeInterval['15min']:
+      case TimeInterval['1D']:
         return timePrice;
-      case TimeInterval['30min']:
-        if (minutes === 0 || minutes === 30) {
+      case TimeInterval['1W']:
+        // if (minutes === 0 || minutes === 30) {
+        // return timePrice;
+        // }
+        return;
+      case TimeInterval['6M']:
+        if (date.diff(startDate, 'days') >= 0) {
           return timePrice;
         }
         return;
-      case TimeInterval['60min']:
-        if (minutes === 0) {
+      case TimeInterval['1Y']:
+        if (day === 1) {
           return timePrice;
         }
-        return;
     }
   });
 
