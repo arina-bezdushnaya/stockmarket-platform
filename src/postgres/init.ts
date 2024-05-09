@@ -1,28 +1,33 @@
-var pgp = require('pg-promise')(/*options*/);
+const pgp = require('pg-promise')({});
 
 // Database connection details;
 const cn = {
-  host: 'localhost',
-  port: 5432,
-  database: 'xxx',
-  user: 'xxx',
-  password: 'xxx',
+  host: process.env.HOST,
+  port: process.env.POSTGRES_PORT,
+  user: process.env.USER,
+  password: process.env.PASSWORD,
+  database: process.env.DB,
+  ssl: {
+    rejectUnauthorized: false,
+  },
 };
-var db = pgp(cn);
 
-// Простой запрос к базе данных для проверки
-// db.query('SELECT NOW()', (err: any, result: any) => {
-//     if (err) {
-//         console.error('Ошибка выполнения запроса:', err);
-//     } else {
-//         console.log('Результат запроса:', result.rows[0]);
-//     }
-// });
+const db = pgp(cn);
 
-db.any('select * from users where active = $1', [true])
-  .then((data: any) => {
-    console.log('DATA:', data);
+// Test connection
+db.connect()
+  .then((obj) => {
+    console.log('Connected to database');
+    obj.done();
   })
+  .catch((error: any) => {
+    console.error('ERROR:', error.message);
+  });
+
+
+db.query('SELECT * from stockprices').then((data: any) => {
+  console.log('DATA:', result.rows[0]);
+})
   .catch((error: any) => {
     console.log('ERROR:', error);
   });

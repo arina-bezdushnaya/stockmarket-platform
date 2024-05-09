@@ -5,6 +5,8 @@ import {router} from './api/routes/userRoute';
 
 dotenv.config();
 
+import './postgres/init';
+
 const app: Express = express();
 const port = process.env.PORT || 3001;
 
@@ -20,6 +22,6 @@ export const corsOptions = {
 
 app.use(cors(corsOptions));
 
-app.listen(port, function () {
+app.listen(port, function() {
   console.log(`[server]: Server is running... on port ${port}`);
 });
