@@ -5,8 +5,6 @@ import {router} from './api/routes/userRoute';
 
 dotenv.config();
 
-import './postgres/init';
-
 const app: Express = express();
 const port = process.env.PORT || 3001;
 
