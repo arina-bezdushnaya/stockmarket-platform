@@ -18,7 +18,8 @@ export enum TimeInterval {
 }
 
 export interface StockPrice {
-  date: string;
+  company: string;
+  timestamp: string;
   open: string;
   high: string;
   low: string;
