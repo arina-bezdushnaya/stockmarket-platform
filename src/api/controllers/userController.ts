@@ -1,7 +1,7 @@
 import {Response, Request} from 'express';
 import moment from 'moment';
 import {StockPrice, TimeInterval} from '../../types';
-import {query} from '../../postgres';
+// import {query} from '../../postgres';
 // import {query} from '../../postgres/init';
 
 // const prices: Record<string, StockPrice[]> = stockPricesDay;
