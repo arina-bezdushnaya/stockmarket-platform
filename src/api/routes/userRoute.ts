@@ -6,3 +6,4 @@ import {corsOptions} from '../../index';
 export const router = express.Router();
 
 router.get('/api/stock', cors(corsOptions), controller.getCompanyPrice);
+router.get('/api/companies', cors(corsOptions), controller.getCompanies);
