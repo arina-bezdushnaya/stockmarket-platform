@@ -42,3 +42,15 @@ export function getCompanies(req: Request, res: Response) {
       console.log('ERROR:', error);
     });
 }
+
+export function getSummary(req: Request, res: Response) {
+  const {company} = req.query;
+
+  db.query(`SELECT * FROM summary WHERE company='${company}'`)
+    .then((result) => {
+      res.send(result);
+    })
+    .catch((error: any) => {
+      console.log('ERROR:', error);
+    });
+}
