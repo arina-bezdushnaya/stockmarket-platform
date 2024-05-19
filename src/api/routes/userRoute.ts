@@ -7,4 +7,4 @@ export const router = express.Router();
 
 router.get('/api/stock', cors(corsOptions), controller.getCompanyPrice);
 router.get('/api/companies', cors(corsOptions), controller.getCompanies);
-router.get('/api/summary', cors(corsOptions), controller.getSummary);
+router.get('/api/summary/:company', cors(corsOptions), controller.getSummary);

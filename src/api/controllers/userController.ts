@@ -44,11 +44,11 @@ export function getCompanies(req: Request, res: Response) {
 }
 
 export function getSummary(req: Request, res: Response) {
-  const {company} = req.query;
+  const {company} = req.params;
 
   db.query(`SELECT * FROM summary WHERE company='${company}'`)
     .then((result) => {
-      res.send(result);
+      res.send(result[0]);
     })
     .catch((error: any) => {
       console.log('ERROR:', error);
